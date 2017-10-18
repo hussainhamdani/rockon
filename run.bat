@@ -1,6 +1,6 @@
 cd interface
-start run.bat
+start "Interface" run.bat
 cd ..
 cd services
-start run.bat
+start "Services" run.bat
 exit
