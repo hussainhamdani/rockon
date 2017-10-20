@@ -1,26 +1,10 @@
 var fs = require('fs');
 var dbpath = 'resources/db/';
+var folderSupprator = '/';
+var relationalSupprator = '-';
+var fileFormat = '.txt';
 
 function createRecord(configuration) {
-    configuration = {
-        'DATABASE': 'rockon',
-        'TABLE': 'users',
-        'RECORDS': [
-            {
-                name: 'Hussain',
-                email: 'hussain@gmail.com'
-            },
-            {
-                name: 'Abbas',
-                email: 'abbas@gmail.com'
-            },
-            {
-                name: 'Imran',
-                email: 'imran@gmail.com'
-            }
-        ]
-    };
-
     var tablePath = dbpath + configuration['DATABASE'];
     if (!fs.existsSync(tablePath)) {
         fs.mkdirSync(tablePath);
@@ -37,6 +21,7 @@ function createRecord(configuration) {
             throw err;
         } else {
             lastInsertedId = parseInt(files.length);
+         tablePath = tablePath + folderSupprator + configuration['TABLE'] + relationalSupprator;
             insertRecprds(tablePath, configuration['RECORDS'], lastInsertedId);
         }
     });
@@ -48,7 +33,7 @@ function insertRecprds(tablePath, records, lastInsertedId) {
             lastInsertedId++;
             var record = records[key];
             record['id'] = lastInsertedId;
-            var filePath = tablePath + '/' + lastInsertedId + '.txt';
+            var filePath = tablePath + lastInsertedId + fileFormat;
             record = JSON.stringify(record);
             fs.appendFile(filePath, record, function (err) {
               if (err) throw err;
@@ -57,33 +42,56 @@ function insertRecprds(tablePath, records, lastInsertedId) {
     }
 }
 
+function getRecordById(configuration, res) {
+   var tablePath = dbpath + configuration['DATABASE'] + folderSupprator + configuration['TABLE'] + folderSupprator + configuration['TABLE'] + relationalSupprator + configuration['ID'] + fileFormat;
+   fs.readFile(tablePath, function(err, data) {
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.write(data);
+      res.end();
+   });
+}
+
+function deleteRecordById(configuration) {
+   var tablePath = dbpath + configuration['DATABASE'] + folderSupprator + configuration['TABLE'] + folderSupprator + configuration['TABLE'] + relationalSupprator + configuration['ID'] + fileFormat;
+   fs.unlink(tablePath, function (err) {
+     if (err) throw err;
+   });
+}
+
 module.exports = function (app) {
 
     // students
     app.get('/api/students', function (req, res) {
-        createRecord({});
-        var filePath = dbpath + 'students/';
-        /*for(var x = 1; x <= 1000; x++) {
-            var user = {
-                name: 'User ' + x,
-                type: 'student'
-            };
-            var fileName = filePath + 'user-' + x + '.txt';
-            /*user = JSON.stringify(user);
-            fs.appendFile(fileName, user, function (err) {
-              if (err) throw err;
-              console.log('Updated user ' + x);
-            });*
-            //Delete the file mynewfile2.txt:
-            fs.unlink(fileName, function (err) {
-              if (err) throw err;
-              console.log('Deleted user ' + x);
-            });
-        }*/
-        fs.readFile(dbpath + 'students.txt', function(err, data) {
-            res.writeHead(200, {'Content-Type': 'application/json'});
-            res.write(data);
-            res.end();
-        });
+      // insert data
+      var configuration = {
+         'DATABASE': 'rockon',
+         'TABLE': 'users',
+         'RECORDS': [
+            {
+               name: 'Hussain',
+               email: 'hussain@gmail.com'
+            },
+            {
+               name: 'Abbas',
+               email: 'abbas@gmail.com'
+            },
+            {
+               name: 'Imran',
+               email: 'imran@gmail.com'
+            }
+         ]
+      };
+        createRecord(configuration);
+
+      // get record by id
+      configuration = {
+         'DATABASE': 'rockon',
+         'TABLE': 'users',
+         'ID' : 1
+      };
+      getRecordById(configuration, res);
+
+      // get record by id
+      deleteRecordById(configuration);
     });
 };
