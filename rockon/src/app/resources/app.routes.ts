@@ -1,25 +1,30 @@
 import { Routes } from '@angular/router';
 import { AppMainDeclarations } from './app.main.declarations';
+import { ReviewDetailsComponent } from './main-components/review-details/review-details.component';
 
 export const AppRoutes: Routes = [
   {
-    path: 'add-user-details',
-    component: AppMainDeclarations.AddUserDetailsComponent,
+    path: 'user-details',
+    component: AppMainDeclarations.UserDetailsComponent,
     data: { title: 'User Details' }
   },
   {
-    path: 'add-user-address',
-    component: AppMainDeclarations.AddUserAddressComponent,
+    path: 'user-address',
+    component: AppMainDeclarations.UserAddressComponent,
     data: { title: 'User Address' }
+  }, 
+  {
+    path: 'review-details',
+    component : AppMainDeclarations.ReviewDetailsComponent
+  },
+  {
+    path: '',
+    redirectTo: '/user-details',
+    pathMatch: 'full'
   },
   {
     path: '**',
     component: AppMainDeclarations.PageNotFoundComponent,
     data: { title: 'Page Not Found' }
-  },
-  {
-    path: '',
-    redirectTo: '/add-user-details',
-    pathMatch: 'full'
   }
 ];

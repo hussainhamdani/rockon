@@ -7,18 +7,23 @@ import { AppComponent } from './app.component';
 import { RouterModule, Routes } from '@angular/router';
 import { AppRoutes} from './resources/app.routes';
 import { AppMainDeclarations } from './resources/app.main.declarations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReviewDetailsComponent } from './resources/main-components/review-details/review-details.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppMainDeclarations.AddUserAddressComponent,
-    AppMainDeclarations.AddUserDetailsComponent,
-    AppMainDeclarations.PageNotFoundComponent
+    AppMainDeclarations.UserAddressComponent,
+    AppMainDeclarations.UserDetailsComponent,
+    AppMainDeclarations.PageNotFoundComponent,
+    ReviewDetailsComponent
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(AppRoutes, { useHash: true }),
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
