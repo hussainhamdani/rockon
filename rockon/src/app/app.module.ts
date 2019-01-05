@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { StoreDateService } from './services/store-date.service';
 
 // App extension
 import { RouterModule, Routes } from '@angular/router';
@@ -25,7 +26,7 @@ import { ReviewDetailsComponent } from './resources/main-components/review-detai
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [StoreDateService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

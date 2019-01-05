@@ -1,4 +1,6 @@
+import { User } from './../../../services/store-date.service';
 import { Component, OnInit } from '@angular/core';
+import { StoreDateService } from '../../../services/store-date.service';
 
 @Component({
   selector: 'app-review-details',
@@ -6,8 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./review-details.component.css']
 })
 export class ReviewDetailsComponent implements OnInit {
+  userDetails: User;
 
-  constructor() { }
+  constructor(private storeService: StoreDateService) {
+    this.storeService.getStoreDateService().subscribe(data => {
+      console.log('ReviewDetailsComponent');
+      this.userDetails = data;
+      console.log(data);
+    })
+  }
 
   ngOnInit() {
   }
