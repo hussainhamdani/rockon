@@ -6,6 +6,26 @@ function rDatabase() {
     var relationalSupprator = '-';
     var fileFormat = '.txt';
 
+    function createStore(fileName) {
+        fileName = fileName + fileFormat;
+        const filePath = dbpath + fileName;
+        var outputData = fs.readFileSync(filePath,'utf8');
+        if(outputData) {
+            outputData = JSON.parse(outputData);
+        }
+        return outputData;
+    }
+
+    function updateStore(fileName, message) {
+        fileName = fileName + fileFormat;
+        var filePath = dbpath + fileName;
+        var stream = fs.createWriteStream(filePath);
+        stream.once('open', function(fd) {
+            stream.write(message);
+            stream.end();
+        });
+    }
+
     function createRecord(configuration) {
         var tablePath = dbpath + configuration['DATABASE'];
         if (!fs.existsSync(tablePath)) {
@@ -74,11 +94,28 @@ function rDatabase() {
     return {
         deleteRecordById : deleteRecordById,
         getRecordById: getRecordById,
-        createRecord: createRecord        
+        createRecord: createRecord,
+        createStore: createStore,
+        updateStore: updateStore
     }
 }
 
 module.exports = function (app) {
+    var database = rDatabase();
+
+    app.get('/get-store/:id', function (req, res) {
+        var data = database.createStore(req.params.id);
+        if(!data) {
+            data = {};
+        }
+        res.json(data);
+    });
+
+    app.post('/set-store/:id', function (req, res) {
+        const message = JSON.stringify(req.body);
+        database.updateStore(req.params.id, message);
+        res.json({'id' : req.params.id});
+    });
 
     // students
     app.get('/api/users/:id', function (req, res) {
