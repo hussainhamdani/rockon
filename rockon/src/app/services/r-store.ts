@@ -16,8 +16,10 @@ export class RStore{
     }
 
     updateStoreDate(value: (string | number), name: string) {
-        this.store[name] = value;
-        this.dataSource.next(this.store);
+        if(this.store[name] !== value) {
+            this.store[name] = value;
+            this.dataSource.next(this.store);
+        }
     }
 }
 

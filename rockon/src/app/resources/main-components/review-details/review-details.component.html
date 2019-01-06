@@ -1,3 +1,47 @@
-<p>
- {{userDetails | json}}
-</p>
+<h1>Review User Details</h1>
+<table class="table">
+<thead class="thead-light">
+    <tr>
+    <th scope="col">Field</th>
+    <th scope="col">Value</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+    <td>First Name</td>
+    <td>{{userDetails.firstName}}</td>
+    </tr>
+    <tr>
+    <td>Last Name</td>
+    <td>{{userDetails.laseName}}</td>
+    </tr>
+    <tr>
+    <td>Email</td>
+    <td>{{userDetails.email}}</td>
+    </tr>
+    <tr>
+    <td>Phone Number</td>
+    <td>{{userDetails.phoneNumber}}</td>
+    </tr>
+    <tr>
+    <td>Unit Number</td>
+    <td>{{userDetails.unitNumber}}</td>
+    </tr>
+    <tr>
+    <td>Street</td>
+    <td>{{userDetails.street}}</td>
+    </tr>
+    <tr>
+    <td>City</td>
+    <td>{{userDetails.city}}</td>
+    </tr>
+    <tr>
+    <td>Postal Code</td>
+    <td>{{userDetails.postalCode}}</td>
+    </tr>
+    <tr>
+    <td>Country</td>
+    <td>{{userDetails.country}}</td>
+    </tr>
+</tbody>
+</table>      

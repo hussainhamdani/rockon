@@ -1,24 +1,17 @@
-import { User } from '../../../services/store-date.service';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { StoreDateService } from '../../../services/store-date.service';
+import { SUser } from '../../../services/user-store';
 
 @Component({
   selector: 'app-review-details',
   templateUrl: './review-details.component.html',
   styleUrls: ['./review-details.component.css']
 })
-export class ReviewDetailsComponent implements OnInit {
-  userDetails: User;
+export class ReviewDetailsComponent{
+  userDetails: SUser;
 
-  constructor(private storeService: StoreDateService) {
-    this.storeService.getStoreDateService().subscribe(data => {
-      console.log('ReviewDetailsComponent');
-      this.userDetails = data;
-      console.log(data);
-    })
-  }
-
-  ngOnInit() {
+  constructor(private userStore: SUser){
+    this.userDetails = userStore;
   }
 
 }

@@ -2,7 +2,7 @@ import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { SUser} from '../../../services/user-store';
-import { RStoreService } from '../../../services/r-store';
+import { RStoreService, RStore } from '../../../services/r-store';
 
 @Component({
   selector: 'app-user-details',
@@ -26,7 +26,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   private lastNameSubscribe;
   private emailSubscribe;
   private phoneNumberSubscribe;
-  private rStore;
+  private rStore: RStore;
 
   constructor(private router: Router, private userStore: RStoreService, private userData: SUser){
     this.rStore = userStore.setStoreInetial(userData);
@@ -41,19 +41,19 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.firstNameSubscribe = this.firstName.valueChanges.subscribe( form => {
-      this.rStore.updateUserDate(this.firstName.value, 'firstName');
+      this.rStore.updateStoreDate(this.firstName.value, 'firstName');
     });
 
     this.lastNameSubscribe = this.lastName.valueChanges.subscribe( form => {
-      this.rStore.updateUserDate(this.lastName.value, 'lastName');
+      this.rStore.updateStoreDate(this.lastName.value, 'lastName');
     });
 
     this.emailSubscribe = this.email.valueChanges.subscribe( form => {
-      this.rStore.updateUserDate(this.email.value, 'email');
+      this.rStore.updateStoreDate(this.email.value, 'email');
     });
 
     this.phoneNumberSubscribe = this.phoneNumber.valueChanges.subscribe( form => {
-      this.rStore.updateUserDate(this.phoneNumber.value, 'phoneNumber');
+      this.rStore.updateStoreDate(this.phoneNumber.value, 'phoneNumber');
     });
   }
 

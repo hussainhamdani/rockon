@@ -9,6 +9,7 @@ import { RStoreService } from '../../../services/r-store';
   templateUrl: './user-address.component.html',
   styleUrls: ['./user-address.component.css']
 })
+
 export class UserAddressComponent implements OnInit {
   unitNumber = new FormControl();
   street = new FormControl();
@@ -23,20 +24,59 @@ export class UserAddressComponent implements OnInit {
     country : this.country
   })
 
+  private storeServiceSubscribe;
+  private unitNumberSubscribe;
+  private streetSubscribe;
+  private citySubscribe;
+  private postalCodeSubscribe;
+  private countrySubscribe;
   private rStore;
   
   constructor(private Router: Router, private userStore: RStoreService, private userData: SUser) {
     this.rStore = userStore.setStoreInetial(userData)
-    this.rStore.getStoreDateService().subscribe( data => {
-      console.log(data);
-    })
-  }
-  
-  goToReview() {
-    this.Router.navigate(['/review-details']);
   }
 
   ngOnInit() {
+    this.storeServiceSubscribe = this.rStore.getStoreDateService().subscribe(data => {
+      this.unitNumber.setValue(data.unitNumber);
+      this.street.setValue(data.street);
+      this.city.setValue(data.city);
+      this.postalCode.setValue(data.postalCode);
+      this.country.setValue(data.country);
+    });
+
+    this.unitNumberSubscribe = this.unitNumber.valueChanges.subscribe( form => {
+      this.rStore.updateStoreDate(this.unitNumber.value, 'unitNumber');
+    });
+
+    this.streetSubscribe = this.street.valueChanges.subscribe( form => {
+      this.rStore.updateStoreDate(this.street.value, 'street');
+    });
+
+    this.citySubscribe = this.city.valueChanges.subscribe( form => {
+      this.rStore.updateStoreDate(this.city.value, 'city');
+    });
+
+    this.postalCodeSubscribe = this.postalCode.valueChanges.subscribe( form => {
+      this.rStore.updateStoreDate(this.postalCode.value, 'postalCode');
+    });
+
+    this.countrySubscribe = this.country.valueChanges.subscribe( form => {
+      this.rStore.updateStoreDate(this.country.value, 'country');
+    });
+  }
+
+  ngOnDestroy() {
+    this.storeServiceSubscribe.unsubscribe();
+    this.unitNumberSubscribe.unsubscribe();
+    this.streetSubscribe.unsubscribe();
+    this.citySubscribe.unsubscribe();
+    this.postalCodeSubscribe.unsubscribe();
+    this.countrySubscribe.unsubscribe();
+  }
+
+  goToReview() {
+    this.Router.navigate(['/review-details']);
   }
 
 }
