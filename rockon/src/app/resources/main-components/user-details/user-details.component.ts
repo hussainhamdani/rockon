@@ -1,7 +1,8 @@
-import { StoreDateService } from './../../../services/store-date.service';
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { SUser} from '../../../services/user-store';
+import { RStoreService } from '../../../services/r-store';
 
 @Component({
   selector: 'app-user-details',
@@ -25,11 +26,14 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   private lastNameSubscribe;
   private emailSubscribe;
   private phoneNumberSubscribe;
+  private rStore;
 
-  constructor(private router: Router, private storeService: StoreDateService) {}
+  constructor(private router: Router, private userStore: RStoreService, private userData: SUser){
+    this.rStore = userStore.setStoreInetial(userData);
+  }
 
   ngOnInit() {
-    this.storeServiceSubscribe = this.storeService.getStoreDateService().subscribe(data => {
+    this.storeServiceSubscribe = this.rStore.getStoreDateService().subscribe(data => {
       this.firstName.setValue(data.firstName);
       this.lastName.setValue(data.lastName);
       this.email.setValue(data.email);
@@ -37,19 +41,19 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.firstNameSubscribe = this.firstName.valueChanges.subscribe( form => {
-      this.storeService.updateUserDate(this.firstName.value, 'firstName');
+      this.rStore.updateUserDate(this.firstName.value, 'firstName');
     });
 
     this.lastNameSubscribe = this.lastName.valueChanges.subscribe( form => {
-      this.storeService.updateUserDate(this.lastName.value, 'lastName');
+      this.rStore.updateUserDate(this.lastName.value, 'lastName');
     });
 
     this.emailSubscribe = this.email.valueChanges.subscribe( form => {
-      this.storeService.updateUserDate(this.email.value, 'email');
+      this.rStore.updateUserDate(this.email.value, 'email');
     });
 
     this.phoneNumberSubscribe = this.phoneNumber.valueChanges.subscribe( form => {
-      this.storeService.updateUserDate(this.phoneNumber.value, 'phoneNumber');
+      this.rStore.updateUserDate(this.phoneNumber.value, 'phoneNumber');
     });
   }
 

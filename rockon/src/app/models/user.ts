@@ -7,4 +7,5 @@ export interface IUser {
     street?: string;
     city?: string;
     postalCode?: string;
+    country?:string
 }

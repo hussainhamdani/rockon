@@ -1,25 +1,18 @@
 <div class="container">
     <form [formGroup]="form" action="">
         <div class="form-group">
-          <label for="buildingName">Building Name</label>
-          <input type="text" 
-          formControlName= "buildingName"
-           class="form-control" />
+          <label for="unitNumber">Building Name</label>
+          <input type="text" formControlName="unitNumber" class="form-control" />
         </div>
         <div class="form-group">
-            <label for="streetName">Street Name</label>
-            <input type="text"
-            name="streetName" 
-            formControlName= "streetName"
-             class="form-control"/>
-          </div>
-          <div class="form-group">
-              <label for="city">City</label>
-              <input type="text" 
-              formControlName= "city"
-               class="form-control"/>
-            </div>
-            <button class="btn btn-primary" type="submit" (click)="goToReview()">Next</button>
-      </form>
-    </div>
+            <label for="street">Street Name</label>
+            <input type="text" formControlName="street" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" formControlName="city" class="form-control"/>
+        </div>
+        <button class="btn btn-primary" type="submit" (click)="goToReview()">Next</button>
+    </form>
+</div>
       

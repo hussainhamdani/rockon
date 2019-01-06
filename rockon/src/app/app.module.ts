@@ -10,6 +10,7 @@ import { AppRoutes} from './resources/app.routes';
 import { AppMainDeclarations } from './resources/app.main.declarations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReviewDetailsComponent } from './resources/main-components/review-details/review-details.component';
+import { RStoreService } from './services/r-store';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { ReviewDetailsComponent } from './resources/main-components/review-detai
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [StoreDateService],
+  providers: [StoreDateService, RStoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

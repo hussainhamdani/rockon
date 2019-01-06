@@ -1,4 +1,4 @@
-import { User } from './../../../services/store-date.service';
+import { User } from '../../../services/store-date.service';
 import { Component, OnInit } from '@angular/core';
 import { StoreDateService } from '../../../services/store-date.service';
 
