@@ -6,9 +6,9 @@ function rDatabase() {
     var relationalSupprator = '-';
     var fileFormat = '.txt';
 
-    function createStore(fileName) {
+    function createStore(folderName, fileName) {
         fileName = fileName + fileFormat;
-        const filePath = dbpath + fileName;
+        const filePath = dbpath + folderName + '/' + fileName;
         var outputData = fs.readFileSync(filePath,'utf8');
         if(outputData) {
             outputData = JSON.parse(outputData);
@@ -16,9 +16,9 @@ function rDatabase() {
         return outputData;
     }
 
-    function updateStore(fileName, message) {
+    function updateStore(folderName, fileName, message) {
         fileName = fileName + fileFormat;
-        var filePath = dbpath + fileName;
+        var filePath = dbpath + folderName + '/' + fileName;
         var stream = fs.createWriteStream(filePath);
         stream.once('open', function(fd) {
             stream.write(message);
@@ -103,17 +103,17 @@ function rDatabase() {
 module.exports = function (app) {
     var database = rDatabase();
 
-    app.get('/get-store/:id', function (req, res) {
-        var data = database.createStore(req.params.id);
+    app.get('/get-store/:store/:id', function (req, res) {
+        var data = database.createStore(req.params.store, req.params.id);
         if(!data) {
             data = {};
         }
         res.json(data);
     });
 
-    app.post('/set-store/:id', function (req, res) {
+    app.post('/set-store/:store/:id', function (req, res) {
         const message = JSON.stringify(req.body);
-        database.updateStore(req.params.id, message);
+        database.updateStore(req.params.store, req.params.id, message);
         res.json({'id' : req.params.id});
     });
 

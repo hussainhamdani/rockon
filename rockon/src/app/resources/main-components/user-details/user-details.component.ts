@@ -1,8 +1,8 @@
 import { Router } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { SUser} from '../../../services/user-store';
-import { RStoreService, RStore } from '../../../services/r-store';
+import { UserStoreActionsService } from '../../../services/actions/user-store.actions.service';
+
 
 @Component({
   selector: 'app-user-details',
@@ -26,14 +26,12 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   private lastNameSubscribe;
   private emailSubscribe;
   private phoneNumberSubscribe;
-  private rStore: RStore;
 
-  constructor(private router: Router, private userStore: RStoreService, private userData: SUser){
-    this.rStore = userStore.setStoreInetial(userData);
+  constructor(private router: Router, private userStore: UserStoreActionsService) {
   }
 
   ngOnInit() {
-    this.storeServiceSubscribe = this.rStore.getStoreDateService().subscribe(data => {
+    this.storeServiceSubscribe = this.userStore.event.subscribe(data => {
       this.firstName.setValue(data.firstName);
       this.lastName.setValue(data.lastName);
       this.email.setValue(data.email);
@@ -41,19 +39,19 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     });
 
     this.firstNameSubscribe = this.firstName.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.firstName.value, 'firstName');
+      this.userStore.updateStoreDate(this.firstName.value, 'firstName');
     });
 
     this.lastNameSubscribe = this.lastName.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.lastName.value, 'lastName');
+      this.userStore.updateStoreDate(this.lastName.value, 'lastName');
     });
 
     this.emailSubscribe = this.email.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.email.value, 'email');
+      this.userStore.updateStoreDate(this.email.value, 'email');
     });
 
     this.phoneNumberSubscribe = this.phoneNumber.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.phoneNumber.value, 'phoneNumber');
+      this.userStore.updateStoreDate(this.phoneNumber.value, 'phoneNumber');
     });
   }
 

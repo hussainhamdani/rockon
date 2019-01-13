@@ -1,8 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppComponent } from './app.component';
-import { StoreDateService } from './services/store-date.service';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 // App extension
 import { RouterModule, Routes } from '@angular/router';
@@ -10,7 +9,7 @@ import { AppRoutes} from './resources/app.routes';
 import { AppMainDeclarations } from './resources/app.main.declarations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReviewDetailsComponent } from './resources/main-components/review-details/review-details.component';
-import { RStoreService } from './services/r-store';
+import { UserStoreActionsService } from './services/actions/user-store.actions.service';
 
 
 @NgModule({
@@ -19,15 +18,16 @@ import { RStoreService } from './services/r-store';
     AppMainDeclarations.UserAddressComponent,
     AppMainDeclarations.UserDetailsComponent,
     AppMainDeclarations.PageNotFoundComponent,
-    ReviewDetailsComponent
+    ReviewDetailsComponent,
   ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(AppRoutes, { useHash: true }),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
-  providers: [StoreDateService, RStoreService],
-  bootstrap: [AppComponent]
+  providers: [ UserStoreActionsService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

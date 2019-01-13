@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { StoreDateService } from '../../../services/store-date.service';
-import { SUser } from '../../../services/user-store';
+import { UserStore } from '../../../services/entities/user.store';
 
 @Component({
   selector: 'app-review-details',
@@ -8,9 +7,9 @@ import { SUser } from '../../../services/user-store';
   styleUrls: ['./review-details.component.css']
 })
 export class ReviewDetailsComponent{
-  userDetails: SUser;
+  userDetails: UserStore;
 
-  constructor(private userStore: SUser){
+  constructor(private userStore: UserStore){
     this.userDetails = userStore;
   }
 

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { IUser } from '../models/user';
+import { IUser } from '../../models/user';
 @Injectable ({
   providedIn: 'root',
 })
 
-export class SUser implements IUser {
+export class UserStore implements IUser {
     firstName : '';
     lastName: '';
     email: '';

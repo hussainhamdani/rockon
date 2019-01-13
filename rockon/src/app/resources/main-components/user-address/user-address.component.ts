@@ -1,8 +1,7 @@
 import { Router } from '@angular/router';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
-import { SUser } from '../../../services/user-store';
-import { RStoreService } from '../../../services/r-store';
+import { UserStoreActionsService } from '../../../services/actions/user-store.actions.service';
 
 @Component({
   selector: 'app-user-address',
@@ -32,12 +31,11 @@ export class UserAddressComponent implements OnInit {
   private countrySubscribe;
   private rStore;
   
-  constructor(private Router: Router, private userStore: RStoreService, private userData: SUser) {
-    this.rStore = userStore.setStoreInetial(userData)
+  constructor(private Router: Router, private userStore: UserStoreActionsService) {
   }
 
   ngOnInit() {
-    this.storeServiceSubscribe = this.rStore.getStoreDateService().subscribe(data => {
+    this.storeServiceSubscribe = this.userStore.event.subscribe(data => {
       this.unitNumber.setValue(data.unitNumber);
       this.street.setValue(data.street);
       this.city.setValue(data.city);
@@ -46,23 +44,23 @@ export class UserAddressComponent implements OnInit {
     });
 
     this.unitNumberSubscribe = this.unitNumber.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.unitNumber.value, 'unitNumber');
+      this.userStore.updateStoreDate(this.unitNumber.value, 'unitNumber');
     });
 
     this.streetSubscribe = this.street.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.street.value, 'street');
+      this.userStore.updateStoreDate(this.street.value, 'street');
     });
 
     this.citySubscribe = this.city.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.city.value, 'city');
+      this.userStore.updateStoreDate(this.city.value, 'city');
     });
 
     this.postalCodeSubscribe = this.postalCode.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.postalCode.value, 'postalCode');
+      this.userStore.updateStoreDate(this.postalCode.value, 'postalCode');
     });
 
     this.countrySubscribe = this.country.valueChanges.subscribe( form => {
-      this.rStore.updateStoreDate(this.country.value, 'country');
+      this.userStore.updateStoreDate(this.country.value, 'country');
     });
   }
 
