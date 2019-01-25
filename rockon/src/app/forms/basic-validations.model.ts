@@ -2,6 +2,7 @@ export class BasicValidationData{
     value: number | string | boolean | RegExp;
     message: string;
 }
+
 export class BasicValidations {
         min?: BasicValidationData;
         max?: BasicValidationData;
@@ -12,14 +13,6 @@ export class BasicValidations {
         maxLength?: BasicValidationData;
         pattern?: BasicValidationData;
         nullValidator?: BasicValidationData;
-        // compose?: {
-        //     value: any,
-        //     message: string
-        // };
-        // composeAsync?: {
-        //     value: any,
-        //     message: string
-        // }
    
     constructor(validations: {
         min?: BasicValidationData,
@@ -42,4 +35,4 @@ export class BasicValidations {
         this.pattern = validations.pattern;
         this.nullValidator = validations.nullValidator;
     }
-  }
+}
